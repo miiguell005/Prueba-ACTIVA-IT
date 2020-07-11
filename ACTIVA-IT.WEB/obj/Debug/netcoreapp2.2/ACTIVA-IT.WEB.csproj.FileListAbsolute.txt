@@ -1,0 +1,14 @@
+C:\Proyectos\ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.csproj.CoreCompileInputs.cache
+C:\Proyectos\ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.RazorAssemblyInfo.cache
+C:\Proyectos\ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.RazorAssemblyInfo.cs
+C:\Proyectos\ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.AssemblyInfoInputs.cache
+C:\Proyectos\ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.AssemblyInfo.cs
+C:\Proyectos\ACTIVA-IT\ACTIVA-IT.WEB\bin\Debug\netcoreapp2.2\ACTIVA-IT.WEB.deps.json
+C:\Proyectos\ACTIVA-IT\ACTIVA-IT.WEB\bin\Debug\netcoreapp2.2\ACTIVA-IT.WEB.runtimeconfig.json
+C:\Proyectos\ACTIVA-IT\ACTIVA-IT.WEB\bin\Debug\netcoreapp2.2\ACTIVA-IT.WEB.runtimeconfig.dev.json
+C:\Proyectos\ACTIVA-IT\ACTIVA-IT.WEB\bin\Debug\netcoreapp2.2\ACTIVA-IT.WEB.dll
+C:\Proyectos\ACTIVA-IT\ACTIVA-IT.WEB\bin\Debug\netcoreapp2.2\ACTIVA-IT.WEB.pdb
+C:\Proyectos\ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.RazorTargetAssemblyInfo.cache
+C:\Proyectos\ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.dll
+C:\Proyectos\ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.pdb
+C:\Proyectos\ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.csprojAssemblyReference.cache

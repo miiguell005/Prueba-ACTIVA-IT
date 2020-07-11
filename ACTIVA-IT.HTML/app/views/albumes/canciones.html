@@ -1,0 +1,72 @@
+﻿<div>
+    <div class="">
+        <div class="col-md-12">
+            <button class="btn btn-primary" ng-click="$ctrl.irAtras()">Átras</button>
+            <div class="text-center">
+                <h1>Canciones</h1>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <br />
+            <div class="col-md-12">
+                <a class="btn btn-primary" ng-click="$ctrl.mostrarCanciones()">
+                    <i class="fa fa-align-justify" aria-hidden="true"></i> Todos
+                </a>&nbsp;&nbsp;&nbsp;
+                <a class="btn btn-primary" ng-click="$ctrl.mostrarCanciones(1)">
+                    <i class="fa fa-heart" aria-hidden="true"></i> Faborito
+                </a>&nbsp;&nbsp;&nbsp;
+                <a class="btn btn-primary" ng-click="$ctrl.mostrarCanciones(-1)">
+                    <i class="fa fa-eye-slash" aria-hidden="true"></i> Inapropiado
+                </a>&nbsp;&nbsp;&nbsp;
+                <a class="btn btn-primary" ng-click="$ctrl.mostrarCanciones(-2)">
+                    <i class="fa fa-trash" aria-hidden="true"></i> No Listados
+                </a>
+                <br />
+                <br />
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover table-condensed">
+                    <thead>
+                        <tr>
+                            <th width="60px"></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="c in $ctrl.canciones" ng-class="p.Eliminado && {'danger':true}">
+                            <td>
+                                <img class="img-circle" ng-src="{{c.url}}" width="50px" height="50px">
+                            </td>
+                            <td>
+                                <div class="col-md-12">
+                                    <b>Título:</b> {{c.title}}
+                                </div>
+                                <div class="col-md-12" ng-if="c.categoria != 0 && c.categoria != -2">
+                                    <b>Categoría:</b> {{c.categoria == 1 ? ""}}
+                                </div>
+                                <div class="col-md-12">
+                                    <i class="fa fa-heart" aria-hidden="true" style="cursor: pointer"
+                                       title="Favorito"
+                                       ng-style="c.categoria == 1 && {'color': 'red'}"
+                                       ng-click="$ctrl.editarCategoria((c.categoria == 1 ? false : true), false, false, c)"></i> &nbsp;&nbsp;&nbsp;
+
+                                    <i class="fa fa-eye-slash" aria-hidden="true" style="cursor: pointer" title="Marcar como inpropiado"
+                                       ng-style="c.categoria == -1 && {'color': '#9cdc00'}"
+                                       ng-click="$ctrl.editarCategoria(false, (c.categoria == -1 ? false : true), false, c)"></i> &nbsp;&nbsp;&nbsp;
+
+                                    <i class="fa fa-trash" aria-hidden="true" style="cursor: pointer" title="No volver a listar"
+                                       ng-style="c.categoria == -2 && {'color': 'red'}"
+                                       ng-click="$ctrl.editarCategoria(false, false, (c.categoria == -2 ? false : true), c)"></i> &nbsp;&nbsp;&nbsp;
+
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
