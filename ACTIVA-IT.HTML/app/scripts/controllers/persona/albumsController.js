@@ -1,33 +1,61 @@
 ﻿
 angular.module('cursos')
-    .controller('albumsController', function ($window, $routeParams, userService, SAlbumes) {
+    .controller('albumsController', function ($window, $routeParams, userService, SAlbumes, SUsuario) {
 
 
         var vm = this;
 
-        vm.idUsuario = 1;
+        vm.usuario;
         vm.pagina = 1;
         vm.cantidad = 0;
 
         //Contiene el título de la página 
         vm.titulo = "Albums";
 
+        //Contiene todos los uaurios guardados
+        vm.usuarios = [];
+
         vm.albums = [];
 
         vm.init = function () {
-            console.log(amplify.store.sessionStorage("idUsuario"));
 
-            if (amplify.store.sessionStorage("idUsuario"))
-                vm.idUsuario = amplify.store.sessionStorage("idUsuario");
-            
-            SAlbumes.query({ id: vm.idUsuario, pagina: vm.pagina }, function (dataAlbums) {
+            if (vm.usuarios.length == 0)
+                SUsuario.query({}, function (dataUsuarios) {
 
-                vm.albums = dataAlbums.albums;
-                vm.cantidad = dataAlbums.cantidad;
+                    vm.usuarios = dataUsuarios;
+                    
+                    if (!amplify.store.sessionStorage("idUsuario"))
+                        vm.usuario = vm.usuarios[0];
+                    else
+                        vm.usuario = _.find(vm.usuarios, function (dataUsuario) { return dataUsuario.idUsuario == amplify.store.sessionStorage("idUsuario").idUsuario; }); 
 
-            }, function (error) {
-                vm.manejarExcepciones(error);
-            });
+                    SUsuario.getToken({ id: vm.usuario.idUsuario }, function (dataToken) {
+
+                        amplify.store.sessionStorage("user", { "token": dataToken.token });
+                        amplify.store.sessionStorage("idUsuario", { "idUsuario": vm.usuario.idUsuario });
+                        vm.init();
+
+                    })
+                });
+
+            //Hay un usuario seleccionado
+            else {
+
+                SUsuario.getToken({ id: vm.usuario.idUsuario }, function (dataToken) {
+
+                    amplify.store.sessionStorage("user", { "token": dataToken.token });
+                    amplify.store.sessionStorage("idUsuario", { "idUsuario": vm.usuario.idUsuario });
+
+                    SAlbumes.query({ pagina: vm.pagina }, function (dataAlbums) {
+
+                        vm.albums = dataAlbums.albums;
+                        vm.cantidad = dataAlbums.cantidad;
+
+                    }, function (error) {
+                        vm.manejarExcepciones(error);
+                    });
+                });
+            }
         }
 
         /**
@@ -36,24 +64,6 @@ angular.module('cursos')
          */
         vm.seleccionarAlbum = function (idAlbum) {
 
-        }
-
-        /**
-         * Actualiza el id del usuario
-         */
-        vm.administrarIdUsuario = function () {
-
-            if (vm.idUsuario == undefined || vm.idUsuario == null) {
-
-                vm.idUsuario = 1;
-                amplify.store.sessionStorage("idUsuario", 1);
-                return;
-            }
-
-            else
-                amplify.store.sessionStorage("idUsuario", vm.idUsuario);
-
-            vm.init();
         }
 
         /**

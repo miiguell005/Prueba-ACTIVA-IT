@@ -6,13 +6,27 @@ using System.Threading.Tasks;
 using ACTIVA_IT.WEB.Modulos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace ACTIVA_IT.WEB.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : Controller
+    public class ValuesController : ControllerBase
     {
+
+        private readonly IConfiguration configuration;
+        private UserInfoModulo userInfo;
+
+
+
+        // TRAEMOS EL OBJETO DE CONFIGURACIÓN (appsettings.json)
+        // MEDIANTE INYECCIÓN DE DEPENDENCIAS.
+        public ValuesController(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
+
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
@@ -25,11 +39,8 @@ namespace ACTIVA_IT.WEB.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-
-
-
-
-            var token = TokenModulo.GenerarToken(new Context.Models.Usuario() { IdUsuario = 1, Apellido = "Rod", Nombre = "Mig", Email = "Mig@gmail.com", Password ="Nan" });
+            var tokenModulo = new TokenModulo(this.configuration);
+            var token = tokenModulo.GenerarToken(new Context.Models.Usuario() { IdUsuario = 1, Apellido = "Rod", Nombre = "Mig", Email = "Mig@gmail.com", Password = "Nan" });
 
             return token;
             //return "value";
@@ -39,9 +50,13 @@ namespace ACTIVA_IT.WEB.Controllers
         [HttpGet("Token/{token}")]
         public ActionResult<string> GetToken(string token)
         {
+
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             IEnumerable<Claim> claims = identity.Claims;
-            
+
+            userInfo = new UserInfoModulo(HttpContext);
+            var id = userInfo.GetIdUsuario();
+
             return token;
             //return "value";
         }

@@ -12,3 +12,17 @@ C:\Proyectos\ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.Razor
 C:\Proyectos\ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.dll
 C:\Proyectos\ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.pdb
 C:\Proyectos\ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.csprojAssemblyReference.cache
+D:\proyectos\Prueba-ACTIVA-IT\ACTIVA-IT.WEB\bin\Debug\netcoreapp2.2\ACTIVA-IT.WEB.deps.json
+D:\proyectos\Prueba-ACTIVA-IT\ACTIVA-IT.WEB\bin\Debug\netcoreapp2.2\ACTIVA-IT.WEB.runtimeconfig.json
+D:\proyectos\Prueba-ACTIVA-IT\ACTIVA-IT.WEB\bin\Debug\netcoreapp2.2\ACTIVA-IT.WEB.runtimeconfig.dev.json
+D:\proyectos\Prueba-ACTIVA-IT\ACTIVA-IT.WEB\bin\Debug\netcoreapp2.2\ACTIVA-IT.WEB.dll
+D:\proyectos\Prueba-ACTIVA-IT\ACTIVA-IT.WEB\bin\Debug\netcoreapp2.2\ACTIVA-IT.WEB.pdb
+D:\proyectos\Prueba-ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.csprojAssemblyReference.cache
+D:\proyectos\Prueba-ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.csproj.CoreCompileInputs.cache
+D:\proyectos\Prueba-ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.RazorAssemblyInfo.cache
+D:\proyectos\Prueba-ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.RazorAssemblyInfo.cs
+D:\proyectos\Prueba-ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.AssemblyInfoInputs.cache
+D:\proyectos\Prueba-ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.AssemblyInfo.cs
+D:\proyectos\Prueba-ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.RazorTargetAssemblyInfo.cache
+D:\proyectos\Prueba-ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.dll
+D:\proyectos\Prueba-ACTIVA-IT\ACTIVA-IT.WEB\obj\Debug\netcoreapp2.2\ACTIVA-IT.WEB.pdb

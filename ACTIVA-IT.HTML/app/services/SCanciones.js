@@ -7,16 +7,10 @@ function SCanciones($resource, userService) {
     return $resource(urlService + "api/Canciones/:id", { id: "@IdCancion" },
         {
             query: {
-                method: 'GET', url: urlService + "api/Canciones/:id/:idUsuario", isArray: true
+                method: 'GET', url: urlService + "api/Canciones/:id", isArray: true
             },
             post: {
-                method: 'POST', url: urlService + "api/Canciones/:idUsuario/:faborito/:inapropiado/:noListar", isArray: false
-            },
-            put: {
-                method: 'PUT', url: urlService + "api/Canciones/:idPersona", params: { idPersona: "@IdPersona" }, isArray: false
-            },
-            remove: {
-                method: 'Delete', url: urlService + "api/Canciones/:idPersona", params: { idPersona: "@IdPersona" }, isArray: false
-            },
+                method: 'POST', url: urlService + "api/Canciones/:faborito/:inapropiado/:noListar", isArray: false
+            }
         });
 }

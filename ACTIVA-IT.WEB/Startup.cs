@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using ACTIVA_IT.WEB.Context;
 using ACTIVA_IT.WEB.Modulos;
@@ -17,6 +18,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
 namespace ACTIVA_IT.WEB
@@ -33,18 +35,29 @@ namespace ACTIVA_IT.WEB
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["JWT:Issuer"],
+                        ValidAudience = Configuration["JWT:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(Configuration["JWT:ClaveSecreta"])
+                        )
+                    };
+                });
+
             //services.AddCors();
 
             //Configura la base de datos
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Activa-ITEntity")));
-
-            //Configuracion del Json Web Token
-            services.JwtAtenticacion();
-            services.AddAuthorization(op =>
-            {
-                op.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build();
-            });
-
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -52,15 +65,12 @@ namespace ACTIVA_IT.WEB
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+                app.UseDeveloperExceptionPage();            
             else
-            {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-            }
+            
 
+            app.UseHttpsRedirection();
             //Configura el cors
             app.UseCors(options =>
                 options.WithOrigins("*")
@@ -80,7 +90,8 @@ namespace ACTIVA_IT.WEB
                 context.Response.ContentType = "application/json";
                 await context.Response.WriteAsync(result);
             }));
-            
+
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
         }

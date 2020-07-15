@@ -1,6 +1,7 @@
 ﻿using ACTIVA_IT.WEB.Context.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -14,20 +15,24 @@ using System.Threading.Tasks;
 
 namespace ACTIVA_IT.WEB.Modulos
 {
-    public static class TokenModulo
+    public class TokenModulo
     {
-        private static string segurityKey = "AC3F091CA34109C5427AFB46CF83B296E2004CA9E55D3B0DA8AA7434F47C69ED";
-        private static string issuer = "http://localhost:44365";
-        private static string audience = "http://localhost:44365";
 
-        internal static TokenValidationParameters validacionToken;
+        private readonly IConfiguration configuration;
+
+        public TokenModulo(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
+
 
         /// <summary>
         /// Genera el token con respecto a los datos del usuario logeado
         /// </summary>
         /// <param name="userInfo"></param>
         /// <returns></returns>
-        public static string GenerarToken(Usuario userInfo)
+        /*
+        public static string GenerarToken1(Usuario userInfo)
         {
             IdentityModelEventSource.ShowPII = true;
 
@@ -54,8 +59,46 @@ namespace ACTIVA_IT.WEB.Modulos
                 );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }*/
+
+
+        public string GenerarToken(Usuario userInfo)
+        {
+            // CREAMOS EL HEADER //
+            var _symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:ClaveSecreta"]));
+
+            var _signingCredentials = new SigningCredentials(_symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+
+            var _Header = new JwtHeader(_signingCredentials);
+
+            // CREAMOS LOS CLAIMS //
+            var _Claims = new[] {
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim("IdUsuario", userInfo.IdUsuario.ToString()),
+                new Claim("Nombre", userInfo.Nombre),
+                new Claim("Apellido", userInfo.Apellido),
+                new Claim("Email", userInfo.Email)
+            };
+
+            // CREAMOS EL PAYLOAD //
+            var _Payload = new JwtPayload(
+                    issuer: configuration["JWT:Issuer"],
+                    audience: configuration["JWT:Audience"],
+                    claims: _Claims,
+                    notBefore: DateTime.UtcNow,
+                    expires: DateTime.UtcNow.AddHours(24)
+                );
+
+            // GENERAMOS EL TOKEN //
+            var _Token = new JwtSecurityToken(
+                    _Header,
+                    _Payload
+                );
+
+            return new JwtSecurityTokenHandler().WriteToken(_Token);
         }
 
+        /*
         /// <summary>
         /// 
         /// </summary>
@@ -88,6 +131,6 @@ namespace ACTIVA_IT.WEB.Modulos
             });
 
 
-        }
+        }*/
     }
 }

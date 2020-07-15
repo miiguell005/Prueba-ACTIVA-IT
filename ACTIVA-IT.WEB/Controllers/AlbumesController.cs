@@ -12,6 +12,9 @@ using System.Net;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using Newtonsoft.Json;
+using System.Security.Claims;
+using ACTIVA_IT.WEB.Modulos;
+using ACTIVA_IT.WEB.Implementacion.ApiAlbums;
 
 namespace ACTIVA_IT.WEB.Controllers
 {
@@ -20,6 +23,8 @@ namespace ACTIVA_IT.WEB.Controllers
     public class AlbumesController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private UserInfoModulo userInfo;
+
 
         public AlbumesController(AppDbContext context)
         {
@@ -27,60 +32,41 @@ namespace ACTIVA_IT.WEB.Controllers
         }
 
         // GET: api/Albumes/1
-        [HttpGet("{id}/{pagina}")]
-        public dynamic GetAlbum(int id, int pagina)
+        [HttpGet("{pagina}")]
+        public async Task<dynamic> GetAlbumAsync(int pagina)
         {
+            //Obtiene el idDel usuario por medio del token
+            userInfo = new UserInfoModulo(HttpContext);
+            var idUsuario = userInfo.GetIdUsuario();
 
-            var url = $"https://jsonplaceholder.typicode.com/albums";
-            var request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = "GET";
-            request.ContentType = "application/json";
-            request.Accept = "application/json";
+            //Realiza la consulta de una api
+            ConsumoApis implementacionModulo = new ConsumoApis();
+            var data = await implementacionModulo.GetApi($"https://jsonplaceholder.typicode.com/albums");
 
-            try
+            //Deserializa el string a una lista de objetos
+            var albumsDto = JsonConvert.DeserializeObject<List<AlbumsDto>>(data);
+
+            albumsDto = albumsDto.ToList();
+
+            var albumes = _context.Album.Where(a => a.IdUsuario == idUsuario).OrderByDescending(a => a.FechaConsulta).ToArray();
+
+            foreach (var a in albumes)
             {
-                using (WebResponse response = request.GetResponse())
-                {
-                    using (Stream strReader = response.GetResponseStream())
-                    {
-                        if (strReader == null)
-                            return null;
-
-                        using (StreamReader objReader = new StreamReader(strReader))
-                        {
-                            string responseBody = objReader.ReadToEnd();
-
-                            var albumsDto = JsonConvert.DeserializeObject<List<AlbumsDto>>(responseBody);
-
-                            albumsDto = albumsDto.ToList();
-
-                            var albumes = _context.Album.Where(a => a.IdUsuario == id).OrderByDescending(a => a.FechaConsulta).ToArray();
-
-                            foreach (var a in albumes)
-                            {
-                                var album = albumsDto.Where(_a => _a.id == a.Id).FirstOrDefault();
-                                album.fechaConsulta = a.FechaConsulta;
-                            }
-
-                            //Organiza los albums
-                            albumsDto = albumsDto.OrderByDescending(o => o.fechaConsulta).ToList();
-
-                            //Cuenta la cantidad de albums que hay
-                            var cantidad = albumsDto.Count();
-
-                            return new
-                            {
-                                cantidad = cantidad,
-                                albums = albumsDto.Skip(10 * (pagina - 1)).Take(10)
-                            };
-                        }
-                    }
-                }
+                var album = albumsDto.Where(_a => _a.id == a.Id).FirstOrDefault();
+                album.fechaConsulta = a.FechaConsulta;
             }
-            catch (WebException ex)
+
+            //Organiza los albums
+            albumsDto = albumsDto.OrderByDescending(o => o.fechaConsulta).ToList();
+
+            //Cuenta la cantidad de albums que hay
+            var cantidad = albumsDto.Count();
+
+            return new
             {
-                throw new Exception("Error", ex);
-            }
+                cantidad = cantidad,
+                albums = albumsDto.Skip(10 * (pagina - 1)).Take(10)
+            };            
         }
 
         private bool AlbumExists(int id)

@@ -73,8 +73,10 @@
     <Content Include="app\scripts\controllers\main\mainController.js" />
     <Content Include="app\scripts\controllers\persona\albumsController.js" />
     <Content Include="app\scripts\controllers\persona\cancionesController.js" />
+    <Content Include="app\services\SUsuario.js" />
     <Content Include="app\services\SAlbumes.js" />
     <Content Include="app\services\SCanciones.js" />
+    <Content Include="app\services\SInterceptors.js" />
     <Content Include="app\services\UserService.js" />
     <Content Include="app\views\albumes\albums.html" />
     <Content Include="app\views\albumes\canciones.html" />

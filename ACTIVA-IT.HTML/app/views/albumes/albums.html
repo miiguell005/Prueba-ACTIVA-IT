@@ -3,7 +3,8 @@
         <button class="btn btn-primary" ng-click="$ctrl.irAtras()">Átras</button>
         <div>
             <b>IdUsuario</b>
-            <input class="form-control" type="number" ng-model="$ctrl.idUsuario" ng-change="$ctrl.administrarIdUsuario()"/>
+            <select class="form-control" ng-model="$ctrl.usuario" ng-change="$ctrl.init()"
+                    ng-options="c as c.nombre + ' ' + c.apellido for c in $ctrl.usuarios"></select>
         </div>
         <div class="text-center">
             <h1>{{$ctrl.titulo}}</h1>

@@ -7,7 +7,7 @@ function SAlbumes($resource, userService) {
     return $resource(urlService + "api/Albumes/:id", { id: "@IdUsuario" },
         {
             query: {
-                method: 'GET', url: urlService + "api/Albumes/:id/:pagina", isArray: false
+                method: 'GET', url: urlService + "api/Albumes/:pagina", isArray: false
             }
         });
 }

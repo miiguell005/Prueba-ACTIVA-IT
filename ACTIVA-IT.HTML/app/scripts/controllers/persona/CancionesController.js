@@ -11,7 +11,7 @@ angular.module('cursos')
 
         vm.init = function () {
 
-            SCanciones.query({ id: $routeParams.idAlbum, idUsuario: amplify.store.sessionStorage("idUsuario") }, function (dataCursos) {
+            SCanciones.query({ id: $routeParams.idAlbum}, function (dataCursos) {
 
                 vm.canciones = dataCursos;
                 vm.copiaCanciones = angular.copy(vm.canciones);
@@ -29,7 +29,7 @@ angular.module('cursos')
          */
         vm.editarCategoria = function (faborito, inapropiado, noListar, c) {
 
-            SCanciones.post({ idUsuario: amplify.store.sessionStorage("idUsuario"), faborito: faborito, inapropiado: inapropiado, noListar: noListar }, c, function (dataCancion) {
+            SCanciones.post({faborito: faborito, inapropiado: inapropiado, noListar: noListar }, c, function (dataCancion) {
 
                 c.categoria = dataCancion.categoria;
 
