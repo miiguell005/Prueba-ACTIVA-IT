@@ -13,4 +13,4 @@ En la solucion hay 2 proyectos 1 ACTIVA-IT.HTML: esta desarrollado bajo los leng
 2 ACTIVA-IT.WEB: Esta desarrollado en .net core 2, C#, para ejecutar este proyecto es necesario dar click derecho Depurar => Iniciar nueva instancia
 
 # Video Funcional
-https://www.youtube.com/watch?v=o_nz_CBRkXs
+https://youtu.be/Ps1LyuPbRIM
